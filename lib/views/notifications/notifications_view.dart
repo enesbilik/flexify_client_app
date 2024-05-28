@@ -2,9 +2,14 @@ import 'package:flexify_client_app/constants/app_padding.dart';
 import 'package:flexify_client_app/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
-class NotificationsView extends StatelessWidget {
-  const NotificationsView({Key? key});
+class NotificationsView extends StatefulWidget {
+  const NotificationsView({super.key});
 
+  @override
+  State<NotificationsView> createState() => _NotificationsViewState();
+}
+
+class _NotificationsViewState extends State<NotificationsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +22,7 @@ class NotificationsView extends StatelessWidget {
           child: Expanded(
             child: ListView.separated(
               padding: EdgeInsets.zero,
-              itemCount: 6,
+              itemCount: notifications.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   contentPadding:
@@ -26,11 +31,11 @@ class NotificationsView extends StatelessWidget {
                     child: Icon(Icons.notifications),
                   ),
                   title: Text(
-                    'Bildirim Başlığı $index',
+                    notifications[index].title,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
-                    'Bildirim Açıklaması $index',
+                    notifications[index].description,
                   ),
                   onTap: () {},
                 );
@@ -49,4 +54,22 @@ class NotificationsView extends StatelessWidget {
       ),
     );
   }
+
+  var notifications = [
+    NotificationModel(
+      title: 'Randevunuz Onaylandı',
+      description: 'Zeynep Hanım randevunuzu onayladı.',
+    ),
+    NotificationModel(
+      title: 'Randevunuz İptal Edildi',
+      description: 'Samet Bey randevunuz iptal etti.',
+    ),
+  ];
+}
+
+class NotificationModel {
+  final String title;
+  final String description;
+
+  NotificationModel({required this.title, required this.description});
 }

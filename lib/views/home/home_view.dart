@@ -51,21 +51,7 @@ class _HomeViewState extends State<HomeView> {
                         const SizedBox(height: 10),
                         buildSearchField(context),
                         const SizedBox(height: 20),
-                        buildSectionTitle("Yaklaşan Randevularım"),
-                        const SizedBox(height: 16),
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            enableInfiniteScroll: false,
-                            clipBehavior: Clip.none,
-                            autoPlay: true,
-                            viewportFraction: 0.99,
-                          ),
-                          items: List.generate(
-                            homeController.upcomingAppointments.length,
-                            (index) => buildUpcomingAppointments(
-                                homeController.upcomingAppointments[index]),
-                          ),
-                        ),
+                        _buildUpcomingSection(),
                         const SizedBox(height: 20),
                         buildSectionTitle("Popüler Danışmanlar"),
                         const SizedBox(height: 16),
@@ -76,6 +62,32 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
       ),
+    );
+  }
+
+  Widget _buildUpcomingSection() {
+    return Obx(
+      () => homeController.upcomingAppointments.isEmpty
+          ? SizedBox.shrink()
+          : Column(
+              children: [
+                buildSectionTitle("Yaklaşan Randevularım"),
+                const SizedBox(height: 16),
+                CarouselSlider(
+                  options: CarouselOptions(
+                    enableInfiniteScroll: false,
+                    clipBehavior: Clip.none,
+                    autoPlay: true,
+                    viewportFraction: 0.99,
+                  ),
+                  items: List.generate(
+                    homeController.upcomingAppointments.length,
+                    (index) => buildUpcomingAppointments(
+                        homeController.upcomingAppointments[index]),
+                  ),
+                ),
+              ],
+            ),
     );
   }
 
